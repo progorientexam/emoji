@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>表情输入：表情图和文字一起</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="center-container">
+      <div id="emoji" class="emoji-display" v-cloak>
+        <div class="chat-box">
+          <div
+            :key="messageItem.id"
+            v-for="messageItem in chatMessageList"
+            class="chat-line"
+          >
+            <cite class="line-name">{{ messageItem.name }}</cite>
+            <span class="line-content" v-html="messageItem.content"></span>
+          </div>
+        </div>
+        <div class="input-panel">
+          <div class="input-media">
+            <em @click="toggleEmojiBox" class="emoji-button">
+              <span class="mdi mdi-emoticon-happy-outline"></span>
+            </em>
+          </div>
+          <div
+            ref="inputBox"
+            @click="handleBoxClick"
+            class="input-box"
+            enterkeyhint="send"
+            contenteditable="true"
+          ></div>
+          <div class="input-control">
+            <button @click="doSend" class="send-button" type="button">
+              发送
+            </button>
+          </div>
+        </div>
+        <div v-show="emoji.isVisible" class="emoji-box">
+          <span
+            @click="insertEmoji(item)"
+            v-for="item in emoji.list"
+            :key="item"
+            class="emoji-item"
+          >
+            <img :src="emoji.path + item + emoji.suffix" />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <script src="src/index.js"></script>
+  </body>
+</html>
